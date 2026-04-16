@@ -7,7 +7,7 @@ todos = []
 
 @app.route("/")
 def index():
-    app_name = os.environ.get("APP_NAME", "FocusFlow")
+    app_name = os.environ.get("APP_NAME", "Focus")
     return render_template("index.html", todos=todos, app_name=app_name)
 
 @app.route("/add", methods=["POST"])
