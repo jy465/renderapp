@@ -206,8 +206,8 @@
       <span class="section-label">Task List</span>
       <div class="stats-row">
         <div class="stat-pill">All <span class="num">{{ todos|length }}</span></div>
-        <div class="stat-pill" style="color:var(--amber)">Pending <span class="num">{{ todos|selectattr('done','equalto',False)|list|length }}</span></div>
-        <div class="stat-pill" style="color:var(--green)">Done <span class="num">{{ todos|selectattr('done','equalto',True)|list|length }}</span></div>
+        <div class="stat-pill" style="color:var(--amber)">Pending <span class="num">{{ todos|rejectattr('done')|list|length }}</span></div>
+        <div class="stat-pill" style="color:var(--green)">Done <span class="num">{{ todos|selectattr('done')|list|length }}</span></div>
       </div>
     </div>
     <form class="add-form" action="/add" method="POST">
@@ -222,12 +222,12 @@
     {% if todos %}
     <ul class="todo-list">
       {% for todo in todos %}
-      <li class="todo-item {% if todo.done %}done{% endif %}">
-        <span class="p-dot p-{{ todo.priority }}" aria-hidden="true"></span>
-        <span class="task-text">{{ todo.task }}</span>
+      <li class="todo-item {% if todo['done'] %}done{% endif %}">
+        <span class="p-dot p-{{ todo['priority'] }}" aria-hidden="true"></span>
+        <span class="task-text">{{ todo['task'] }}</span>
         <div class="todo-actions">
-          <a href="/toggle/{{ loop.index0 }}"><button class="btn-action btn-done">{{ '↩ Undo' if todo.done else '✓ Done' }}</button></a>
-          <a href="/delete/{{ loop.index0 }}"><button class="btn-action btn-del">✕</button></a>
+          <a href="/toggle/{{ todo['id'] }}"><button class="btn-action btn-done">{{ '↩ Undo' if todo['done'] else '✓ Done' }}</button></a>
+          <a href="/delete/{{ todo['id'] }}"><button class="btn-action btn-del">✕</button></a>
         </div>
       </li>
       {% endfor %}
