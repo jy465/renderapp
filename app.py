@@ -1,8 +1,7 @@
 import os
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
-
 todos = []
 
 @app.route("/")
@@ -12,7 +11,7 @@ def index():
 
 @app.route("/add", methods=["POST"])
 def add():
-    item = request.form.get("item")
+    item = request.form.get("item", "").strip()
     priority = request.form.get("priority", "medium")
     if item:
         todos.append({"task": item, "priority": priority, "done": False})
